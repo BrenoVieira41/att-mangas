@@ -36,9 +36,3 @@ class ReadController {
 }
 
 export default new ReadController();
-// adicionar nova leitura,
-// ler,
-
-// lançados,
-// ---
-// escalonar novas leitura.

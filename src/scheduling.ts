@@ -68,15 +68,19 @@ async function lastChapter(link: string) {
     const preferences = await repository.readPreference();
 
     for (const preference of preferences) {
+      const mangaName = preference.name;
       const lastEp = await lastChapter(preference.link);
-      const manga = lastEp.manga.toLowerCase();
+      const lastChapterSaved = await repository.lastManga(mangaName);
 
       if (Number(lastEp.chapter) <= Number(preference.watched)) {
-        return console.log(`${manga}, Não teve novos lançamentos.`);
+        return console.log(`${mangaName}, Não teve novos lançamentos.`);
       }
 
-      await repository.addManga(manga, lastEp.chapter);
-      return console.log(`${manga}, possuí novos episódios.`);
+      if (Number(lastChapterSaved.chapter) < Number(lastEp.chapter)) {
+        await repository.addManga(mangaName, lastEp.chapter);
+      }
+
+      return console.log(`${mangaName}, possuí novos episódios. último EP = ${lastEp.chapter}`);
     }
   });
 })();

@@ -22,9 +22,9 @@ class ReadRepository {
     return createPreference;
   }
 
-  public async lastManga(id: number): Promise<any> {
+  public async lastManga(name: string): Promise<any> {
     const readManga = await mangaRepository.findOne({
-      where: {id},
+      where: {name},
       order: { chapter: 'DESC' }
     });
     return readManga;
@@ -34,14 +34,7 @@ class ReadRepository {
     const addManga = await mangaRepository.save({ chapter: chapter, name: name });
     return addManga;
   }
-  // id
-  // name
-  // chapter
 
 }
 
 export default ReadRepository;
-
-// manga
-// link
-// watched
